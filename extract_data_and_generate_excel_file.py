@@ -75,11 +75,11 @@ for i in range(1, number_of_configurations):
 	results_sheet.write(i, resultDict['CONFIG_INDEX_NO'], configuration_index)
 
 	#GET EXECUTION CYCLES COUNT FROM THE GENERATED FILES "ta.log.000" (qsort)
-	qsort_exec_cycles = performance_extractor.get_execution_cycles_count('./output-qsort.c/ta.log.000')
+	qsort_exec_cycles = performance_extractor.get_execution_cycles_count('./output-ucbqsort.c/ta.log.000')
 
 	#GET TRACE 1'S INSTRUCTION COUNT (qsort)
 	#ASSUMES THAT "pcntl.txt" HAS BEEN CREATED BY THE BASH FILE IN THE output DIRECTORY
-	qsort_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-qsort.c/pcntl.txt', 1)
+	qsort_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-ucbqsort.c/pcntl.txt', 1)
 
 	#WRITE RESULTS IN THE RESULTS EXCEL SHEET
 	results_sheet.write(i, resultDict['QSORT_EXEC_CYCLES'], qsort_exec_cycles)

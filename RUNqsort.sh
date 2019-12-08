@@ -1,4 +1,4 @@
-run qsort -O3
-cd ./output-qsort.c
+run ucbqsort -O3
+cd ./output-ucbqsort.c
 gprof a.out gmon-nocache.out > gmon-nocache.txt
-pcntl qsort.s > pcntl.txt
+pcntl ucbqsort.s > pcntl.txt
