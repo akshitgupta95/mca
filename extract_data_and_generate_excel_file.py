@@ -79,11 +79,11 @@ for i in range(1, number_of_configurations):
 
 	#GET TRACE 1'S INSTRUCTION COUNT (qsort)
 	#ASSUMES THAT "pcntl.txt" HAS BEEN CREATED BY THE BASH FILE IN THE output DIRECTORY
-	bcnt_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-bcnt.c/pcntl.txt', 1)
+	# bcnt_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-bcnt.c/pcntl.txt', 1)
 
 	#WRITE RESULTS IN THE RESULTS EXCEL SHEET
 	results_sheet.write(i, resultDict['BCNT_EXEC_CYCLES'], bnct_exec_cycles)
-	results_sheet.write(i, resultDict['BCNT_TRACE1'], bcnt_trace1_ilp)
+	# results_sheet.write(i, resultDict['BCNT_TRACE1'], bcnt_trace1_ilp)
 
 	#CALL BASH FILE TO SIMULATE ARCHITECTURE (CONVOLUTION 5x5)
 	subprocess.call('./RUNengine.sh',shell=True)
@@ -93,11 +93,11 @@ for i in range(1, number_of_configurations):
 	
 	#GET TRACE 1'S INSTRUCTION COUNT (CONVOLUTION 5x5)
 	#ASSUMES THAT "pcntl.txt" HAS BEEN CREATED BY THE BASH FILE IN THE output DIRECTORY	
-	engine_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-engine.c/pcntl.txt', 3)
+	# engine_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-engine.c/pcntl.txt', 3)
 	
 	#WRITE RESULTS IN THE RESULTS EXCEL SHEET
 	results_sheet.write(i, resultDict['ENGINE_EXEC_CYCLES'], engine_exec_cycles)
-	results_sheet.write(i, resultDict['ENGINE_TRACE1'], engine_trace1_ilp)
+	# results_sheet.write(i, resultDict['ENGINE_TRACE1'], engine_trace1_ilp)
 
 #CLOSE WORKBOOKS
 configurations_wb.release_resources()
