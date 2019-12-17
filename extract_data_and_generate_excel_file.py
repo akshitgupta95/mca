@@ -82,7 +82,7 @@ for i in range(1, number_of_configurations):
 	# bcnt_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-bcnt.c/pcntl.txt', 1)
 
 	#WRITE RESULTS IN THE RESULTS EXCEL SHEET
-	results_sheet.write(i, resultDict['BCNT_EXEC_CYCLES'], bnct_exec_cycles)
+	results_sheet.write(i, resultDict['BCNT_EXEC_CYCLES'], bcnt_exec_cycles)
 	# results_sheet.write(i, resultDict['BCNT_TRACE1'], bcnt_trace1_ilp)
 
 	#CALL BASH FILE TO SIMULATE ARCHITECTURE (CONVOLUTION 5x5)
