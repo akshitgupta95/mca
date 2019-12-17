@@ -51,7 +51,7 @@ except OSError as exc: #The exception raised should only be a "directory exists"
 '''
 
 #Keys corresponding to columns in the simulation result excel sheet
-resultDict = {'CONFIG_INDEX_NO':0 , 'QSORT_EXEC_CYCLES':1, 'QSORT_TRACE1':2, 'CONV_EXEC_CYCLES':3, 'CONV_TRACE1':4 }
+resultDict = {'CONFIG_INDEX_NO':0 , 'BCNT_EXEC_CYCLES':1, 'BCNT_TRACE1':2, 'ENGINE_EXEC_CYCLES':3, 'ENGINE_TRACE1':4 }
 
 #Overwrites "PERF_RESULTS.xlsx" if it exists already, creates a new file otherwise
 results_wb = xlsxwriter.Workbook('PERF_RESULTS.xlsx')
@@ -70,34 +70,34 @@ for i in range(1, number_of_configurations):
 	generate_configuration_file(i)
 	
 	#CALL BASH FILE TO SIMULATE ARCHITECTURE (qsort)
-	subprocess.call('./RUNqsort.sh',shell=True)
+	subprocess.call('./RUNbcnt.sh',shell=True)
 	configuration_index = configurations_sheet.cell_value(i, dict_col_index['CONFIG_INDEX_NO'])
 	results_sheet.write(i, resultDict['CONFIG_INDEX_NO'], configuration_index)
 
 	#GET EXECUTION CYCLES COUNT FROM THE GENERATED FILES "ta.log.000" (qsort)
-	qsort_exec_cycles = performance_extractor.get_execution_cycles_count('./output-ucbqsort.c/ta.log.000')
+	bcnt_exec_cycles = performance_extractor.get_execution_cycles_count('./output-bcnt.c/ta.log.000')
 
 	#GET TRACE 1'S INSTRUCTION COUNT (qsort)
 	#ASSUMES THAT "pcntl.txt" HAS BEEN CREATED BY THE BASH FILE IN THE output DIRECTORY
-	qsort_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-ucbqsort.c/pcntl.txt', 1)
+	bcnt_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-bcnt.c/pcntl.txt', 1)
 
 	#WRITE RESULTS IN THE RESULTS EXCEL SHEET
-	results_sheet.write(i, resultDict['QSORT_EXEC_CYCLES'], qsort_exec_cycles)
-	results_sheet.write(i, resultDict['QSORT_TRACE1'], qsort_trace1_ilp)
+	results_sheet.write(i, resultDict['BCNT_EXEC_CYCLES'], bnct_exec_cycles)
+	results_sheet.write(i, resultDict['BCNT_TRACE1'], bcnt_trace1_ilp)
 
 	#CALL BASH FILE TO SIMULATE ARCHITECTURE (CONVOLUTION 5x5)
-	subprocess.call('./RUNconv.sh',shell=True)
+	subprocess.call('./RUNengine.sh',shell=True)
 
 	#GET EXECUTION CYCLES COUNT FROM THE GENERATED FILES "ta.log.000" (CONVOLUTION 5x5)
-	convolution5x5_exec_cycles = performance_extractor.get_execution_cycles_count('./output-convolution_5x5.c/ta.log.000')
+	engine_exec_cycles = performance_extractor.get_execution_cycles_count('./output-engine.c/ta.log.000')
 	
 	#GET TRACE 1'S INSTRUCTION COUNT (CONVOLUTION 5x5)
 	#ASSUMES THAT "pcntl.txt" HAS BEEN CREATED BY THE BASH FILE IN THE output DIRECTORY	
-	convolution5x5_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-convolution_5x5.c/pcntl.txt', 3)
+	engine_trace1_ilp = performance_extractor.get_trace_1_ilp_value('./output-engine.c/pcntl.txt', 3)
 	
 	#WRITE RESULTS IN THE RESULTS EXCEL SHEET
-	results_sheet.write(i, resultDict['CONV_EXEC_CYCLES'], convolution5x5_exec_cycles)
-	results_sheet.write(i, resultDict['CONV_TRACE1'], convolution5x5_trace1_ilp)
+	results_sheet.write(i, resultDict['ENGINE_EXEC_CYCLES'], engine_exec_cycles)
+	results_sheet.write(i, resultDict['ENGINE_TRACE1'], engine_trace1_ilp)
 
 #CLOSE WORKBOOKS
 configurations_wb.release_resources()
